@@ -55,6 +55,9 @@ client.on(RoomEvent.Timeline, async (event, room, toStartOfTimeline) => {
         const count = (!isNaN(extraCount) && extraCount > 0) ? Math.min(extraCount, 20) : 0;
 
         try {
+            if (count > 10) {
+                await client.sendNotice(room.roomId, `${count} is a too large value! Maximum is 10`);
+            }
             // Fetch the replied-to event
             const replyToEvent = await client.fetchRoomEvent(room.roomId, replyTo);
 
